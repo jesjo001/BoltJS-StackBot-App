@@ -25,13 +25,11 @@ app.message('hello', async ({message, say}) => {
     }
 });
 
-
-// The echo command simply echoes on command
 app.command('/bot', async ({ command, ack, respond }) => {
-    // Acknowledge command request
+    
     try{
+        // Acknowledge command request
         await ack();
-        // console.log(command)
         await respond({
             "blocks": [
                 {
@@ -91,9 +89,6 @@ app.action('welcome_trigger', async ({ respond ,action, body, ack, say }) => {
         
         // Acknowledge the action
         await ack();
-        // log.info(action)
-        // log.info(`body is`);
-        // log.info(body)
         let { text } = action.selected_option.text;
         const { username, id } = body.user;
         const channelName = body.channel.name;
@@ -111,8 +106,6 @@ app.action('welcome_trigger', async ({ respond ,action, body, ack, say }) => {
         if(!exists){
             const saveState = await UserState.create({ state: text, userId: id, username, channelId, channelName })
         }        
-        
-       log.info(text);
 
         await respond({
             "blocks": [
@@ -208,9 +201,7 @@ app.action('hobbies_select', async ({ body, action , ack, say }) => {
             $gte: today.toDate(),
             $lte: moment(today).endOf('day').toDate()
         }, 
-        }, { channelId, channelName, username, userId: id,  hobbies: responseArray }, { upsert: true, new: true,})
-
-        log.info(exist);
+        }, { channelId, channelName, username, userId: id,  hobbies: responseArray }, { upsert: true, new: true,});
        
         await say(`<@${body.user.id}> Thank You`);
     } catch (error) {
