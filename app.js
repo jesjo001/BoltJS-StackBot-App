@@ -82,7 +82,7 @@ app.command('/bot', async ({ command, ack, respond }) => {
         });
     }catch(e){
         //logger doesnt block IO like console.log does
-        log.error(error);
+        log.error(e);
     }
 });
 
