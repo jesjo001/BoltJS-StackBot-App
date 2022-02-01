@@ -11,8 +11,7 @@ const app = new App({
     token: process.env.SLACK_BOT_USER_TOKEN,
     signingSecret: process.env.SLACK_SIGNING_SECRET,
     socketMode:true,
-    appToken: process.env.SLACK_APP_TOKEN,
-    port: process.env.PORT || 3000
+    appToken: process.env.SLACK_APP_TOKEN
 });
 
 //respond to a simple hello
@@ -20,7 +19,7 @@ app.message('hello', async ({message, say}) => {
     try {
         await say(`Hey there <@${message.user}>!`);
     } catch (error) {
-        //logger doesnt block IO like console.log does
+        //logger doesn't block IO like console.log does
         log.error(error);
     }
 });
@@ -78,8 +77,8 @@ app.command('/bot', async ({ command, ack, respond }) => {
                 
             ]
         });
-    }catch(e){
-        //logger doesnt block IO like console.log does
+    } catch(e){
+        //logger doesn't block IO like console.log does
         log.error(e);
     }
 });
@@ -102,7 +101,7 @@ app.action('welcome_trigger', async ({ respond ,action, body, ack, say }) => {
             $lte: moment(today).endOf('day').toDate()
         }, channelId, userId: id })
 
-        //if user hasnt answered the question today save in the database
+        //if user hasn't answered the question today save in the database
         if(!exists){
             const saveState = await UserState.create({ state: text, userId: id, username, channelId, channelName })
         }        
@@ -174,12 +173,13 @@ app.action('welcome_trigger', async ({ respond ,action, body, ack, say }) => {
        
 
     } catch (error) {
-        //logger doesnt block IO like console.log does
+        //logger doesn't block IO like console.log does
         log.error(error);
     }
 });
 
 app.action('hobbies_select', async ({ body, action , ack, say }) => {
+
     try {
         // Acknowledge the action
         await ack();
@@ -196,7 +196,7 @@ app.action('hobbies_select', async ({ body, action , ack, say }) => {
             if(responseArray.indexOf(response) === -1) responseArray.push(response);
         })
 
-        //update record if it esist else create a record 
+        //update record if it exist else create a record 
         const exist = await Hobbie.findOneAndUpdate({ channelId, userId: id, createdAt: {
             $gte: today.toDate(),
             $lte: moment(today).endOf('day').toDate()
@@ -205,7 +205,7 @@ app.action('hobbies_select', async ({ body, action , ack, say }) => {
        
         await say(`<@${body.user.id}> Thank You`);
     } catch (error) {
-        //logger doesnt block IO like console.log does
+        //logger does'nt block IO like console.log does
         log.error(error);
     }
 });
@@ -214,10 +214,10 @@ export const start = async () => {
 
     try {
         await connect();
-        await app.start()
+        await app.start(process.env.PORT)
         log.info(`Rest Api started on port ${process.env.PORT}`)
     } catch (error) {
-        //logger doesnt block IO like console.log does
+        //logger doesn't block IO like console.log does
         log.error(error);
     }
 };
