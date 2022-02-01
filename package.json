@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js"
@@ -13,6 +13,15 @@
   "license": "ISC",
   "dependencies": {
     "@slack/bolt": "^3.9.0",
-    "dotenv": "^14.3.2"
+    "dayjs": "^1.10.7",
+    "dotenv": "^14.3.2",
+    "express": "^4.17.2",
+    "moment": "^2.29.1",
+    "mongoose": "^6.1.9",
+    "mongose": "^0.0.2-security",
+    "pino": "^7.6.5",
+    "pino-pretty": "^7.5.1",
+    "pm2": "^5.1.2",
+    "rate-limiter-flexible": "^2.3.6"
   }
 }
